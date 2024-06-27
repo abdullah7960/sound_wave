@@ -17,6 +17,14 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "2.1.1"
+  bottom_bar_matu:
+    dependency: "direct main"
+    description:
+      name: bottom_bar_matu
+      sha256: "1566e067210380b543db1a548499e57d39dd8f5ceb9eaa878d036f82d886353e"
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "1.5.0"
   characters:
     dependency: transitive
     description:
@@ -226,4 +234,4 @@ packages:
     version: "13.0.0"
 sdks:
   dart: ">=3.3.4 <4.0.0"
-  flutter: ">=1.16.0"
+  flutter: ">=1.17.0"
