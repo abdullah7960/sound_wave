@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sound_wave/screens/album/album_list_screen.dart';
+import 'package:sound_wave/screens/all_songs/all_songs_screen.dart';
 import 'package:sound_wave/screens/homescreen/homescreen.dart';
 import 'package:sound_wave/screens/splash_screen.dart';
 
@@ -24,5 +25,6 @@ Map<String, WidgetBuilder> getAppRoutes() {
     Routes.splashScreen: (context) => const SplashScreen(),
     Routes.homeScreen: (context) => const HomeScreen(),
     Routes.bottomNavigation: (context) => const BottomNavigationScreen(),
+    Routes.allSongScreen: (context) => const AllSongsScreen(),
   };
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:percent_indicator/percent_indicator.dart';
 import 'package:sound_wave/utils/routes.dart';
 import 'package:sound_wave/utils/theme.dart';
 
@@ -19,9 +20,9 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   void _simulateLoading() {
-    Future.delayed(const Duration(milliseconds: 200), () {
+    Future.delayed(const Duration(milliseconds: 1000), () {
       setState(() {
-        _progress += 10;
+        _progress += 20;
         if (_progress < 100) {
           _simulateLoading();
         }
@@ -49,42 +50,40 @@ class _SplashScreenState extends State<SplashScreen> {
               const Icon(
                 Icons.music_note,
                 size: 100,
-                color: Colors.white,
+                color: AppColors.white,
               ),
               SizedBox(height: height * .02),
               const Text(
                 'My Audio Player',
                 style: TextStyle(
                   fontSize: 30,
-                  color: Colors.white,
+                  color: AppColors.white,
                   fontWeight: FontWeight.bold,
                 ),
               ),
               SizedBox(height: height * .02),
-              Container(
-                height: height * .02,
-                decoration: BoxDecoration(
-                  color: Colors.white.withOpacity(0.2),
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(10),
-                  child: LinearProgressIndicator(
-                    value: _progress / 100,
-                    valueColor:
-                        const AlwaysStoppedAnimation<Color>(Colors.white),
-                    backgroundColor: Colors.transparent,
+              SizedBox(
+                height: height * 0.05,
+                width: width,
+                child: LinearPercentIndicator(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  animation: true,
+                  animationDuration: 500,
+                  lineHeight: 20.0,
+                  percent: _progress / 100,
+                  barRadius: const Radius.circular(20),
+                  center: Text(
+                    "$_progress%",
+                    style: const TextStyle(
+                        fontSize: 12.0,
+                        fontWeight: FontWeight.w600,
+                        color: AppColors.white),
                   ),
+                  progressColor: AppColors.blue,
+                  backgroundColor: Colors.grey[300],
                 ),
               ),
               SizedBox(height: height * .02),
-              Text(
-                '${_progress.toInt()}%',
-                style: const TextStyle(
-                  fontSize: 20,
-                  color: Colors.white,
-                ),
-              ),
               const Spacer(),
             ],
           ),
@@ -105,8 +104,8 @@ class _SplashScreenState extends State<SplashScreen> {
                 ),
               ),
               icon: const Icon(Icons.arrow_forward),
-              backgroundColor: Colors.white,
-              foregroundColor: Colors.blue,
+              backgroundColor: AppColors.white,
+              foregroundColor: AppColors.blue,
             )
           : null,
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,

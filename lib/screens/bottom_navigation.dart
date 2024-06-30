@@ -2,6 +2,9 @@ import 'package:bottom_bar_matu/bottom_bar/bottom_bar_bubble.dart';
 import 'package:bottom_bar_matu/bottom_bar_item.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:sound_wave/screens/all_songs/all_songs_screen.dart';
+import 'package:sound_wave/screens/homescreen/homescreen.dart';
+import 'package:sound_wave/utils/theme.dart';
 
 import 'provider_botm_nav.dart';
 
@@ -13,7 +16,7 @@ class BottomNavigationScreen extends StatefulWidget {
 }
 
 class _BottomNavigationState extends State<BottomNavigationScreen> {
-  final PageController controller = PageController();
+  final PageController controller = PageController(initialPage: 2);
 
   @override
   Widget build(BuildContext context) {
@@ -21,15 +24,25 @@ class _BottomNavigationState extends State<BottomNavigationScreen> {
       bottomNavigationBar: Consumer<ProBottomNav>(
         builder: (context, appState, child) {
           return BottomBarBubble(
+            backgroundColor: Colors.purple.shade800,
+            color: AppColors.blue,
             items: [
               BottomBarItem(
-                iconData: Icons.home,
+                iconBuilder: (color) => Icon(Icons.music_note,
+                    size: appState.selectedIndex == 0 ? 32 : 25,
+                    color: appState.selectedIndex == 0
+                        ? AppColors.blue
+                        : AppColors.white),
               ),
               BottomBarItem(
                 iconData: Icons.chat,
               ),
               BottomBarItem(
-                iconData: Icons.notifications,
+                iconBuilder: (color) => Icon(Icons.home,
+                    size: appState.selectedIndex == 2 ? 32 : 25,
+                    color: appState.selectedIndex == 2
+                        ? AppColors.blue
+                        : AppColors.white),
               ),
               BottomBarItem(
                 iconData: Icons.calendar_month,
@@ -58,15 +71,11 @@ class _BottomNavigationState extends State<BottomNavigationScreen> {
               });
             },
             children: const <Widget>[
-              Center(
-                child: Text('First Page'),
-              ),
+              AllSongsScreen(),
               Center(
                 child: Text('Second Page'),
               ),
-              Center(
-                child: Text('Third Page'),
-              ),
+              HomeScreen(),
               Center(
                 child: Text('Four Page'),
               ),
