@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:on_audio_query/on_audio_query.dart';
 
+import '../../utils/database_favourite.dart';
 import '../../utils/toast_message.dart';
 
 class ProviderHomeScreen extends ChangeNotifier {
@@ -87,5 +88,49 @@ class ProviderHomeScreen extends ChangeNotifier {
           .toList();
     }
     notifyListeners();
+  }
+
+  //For adding to favourite
+
+  Future<void> addFavoriteId(int songId) async {
+    await DatabaseHelper.insertFavoriteSongId(songId);
+    _favoriteSongIdsFromLocalDatabase.add(songId);
+    await loadFavoriteSongs();
+    notifyListeners();
+  }
+
+  Set<int> _favoriteSongIdsFromLocalDatabase = {};
+
+  Future<void> loadFavoriteSongIds() async {
+    _favoriteSongIdsFromLocalDatabase =
+        Set<int>.from(await DatabaseHelper.getFavoriteSongIds());
+    await loadFavoriteSongs();
+    notifyListeners();
+  }
+
+  bool isFavorite(int songId) {
+    return _favoriteSongIdsFromLocalDatabase.contains(songId);
+  }
+
+  Future<void> removeFavorite(int songId) async {
+    await DatabaseHelper.removeFavoriteFromDatabase(songId);
+    _favoriteSongIdsFromLocalDatabase.remove(songId);
+    await loadFavoriteSongs();
+    notifyListeners();
+  }
+
+  Future<void> toggleFavorite(int songIdToSave) async {
+    if (isFavorite(songIdToSave)) {
+      await removeFavorite(songIdToSave);
+    } else {
+      await addFavoriteId(songIdToSave);
+    }
+  }
+
+  List<SongModel> favoriteSongsList = [];
+  Future<void> loadFavoriteSongs() async {
+    favoriteSongsList = _allSongsFromExtStorg
+        .where((song) => _favoriteSongIdsFromLocalDatabase.contains(song.id))
+        .toList();
   }
 }
